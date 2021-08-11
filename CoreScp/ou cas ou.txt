@@ -1,0 +1,14 @@
+        public static int GetJobPrice(BrokeProtocol.Entities.ShPlayer player, BrokeProtocol.Utility.Jobs.JobInfo job)
+        {
+            int value = 0;
+            if (job.upgrades.Length > 0)
+            {
+                foreach (BrokeProtocol.Required.InventoryStruct inventoryStruct in job.upgrades[0].items)
+                {
+                    BrokeProtocol.Entities.ShItem entity = BrokeProtocol.Utility.MonoBehaviourSingleton<BrokeProtocol.Managers.SceneManager>.Instance.GetEntity<BrokeProtocol.Entities.ShItem>(inventoryStruct.itemName);
+                    int count = inventoryStruct.count - player.MyItemCount(entity);
+                    if (count > 0) value += count * entity.value;
+                }
+            }
+            return value;
+        }
